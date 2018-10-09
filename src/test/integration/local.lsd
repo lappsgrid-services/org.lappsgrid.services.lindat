@@ -1,0 +1,24 @@
+/*
+ * We expect the UDPipeService to be running on localhost.
+ */
+
+String base = "http://localhost:8080/udpipe-1.0.0-SNAPSHOT/services"
+String udpipe_url = "$base/udpipe"
+String nametag_url = "$base/nametag"
+
+//String text = "Karen flew to New York. Nancy flew to Bloomington."
+
+String text = new File("src/test/resources/input.lif").text
+
+ServiceClient udpipe = new ServiceClient(udpipe_url)
+ServiceClient nametag = new ServiceClient(nametag_url)
+
+Data data = new Data(Uri.TEXT, text)
+data.setParameter("tools", "tokenizer")
+//String json = udpipe.execute(data.asJson())
+String json = udpipe.execute(text)
+println "Executing nametag service"
+json = nametag.execute(json)
+
+data = Serializer.parse(json)
+println data.asPrettyJson()

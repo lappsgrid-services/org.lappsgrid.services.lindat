@@ -1,0 +1,10 @@
+String base = "http://localhost:8080/udpipe-1.0.0-SNAPSHOT/services"
+String udpipe = "$base/udpipe"
+String nametag = "$base/nametag"
+
+[udpipe, nametag].each { url ->
+    def service = new ServiceClient(url)
+    println url
+    println service.getMetadata()
+    println()
+}

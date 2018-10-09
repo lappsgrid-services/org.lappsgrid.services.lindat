@@ -1,0 +1,18 @@
+# newdoc
+# newpar
+# sent_id = 1
+# text = Karen flew to New York.
+1	Karen	Karen	PROPN	NNP	Number=Sing	2	nsubj	_	TokenRange=0:5
+2	flew	flow	VERB	VBD	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	TokenRange=6:10
+3	to	to	ADP	IN	_	5	case	_	TokenRange=11:13
+4	New	New	PROPN	NNP	Number=Sing	5	compound	_	TokenRange=14:17
+5	York	York	PROPN	NNP	Number=Sing	2	obl	_	SpaceAfter=No|TokenRange=18:22
+6	.	.	PUNCT	.	_	2	punct	_	TokenRange=22:23
+
+# sent_id = 2
+# text = Nancy flew to Bloomington.
+1	Nancy	Nancy	PROPN	NNP	Number=Sing	2	nsubj	_	TokenRange=24:29
+2	flew	flow	VERB	VBD	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	TokenRange=30:34
+3	to	to	ADP	IN	_	4	case	_	TokenRange=35:37
+4	Bloomington	Bloomington	PROPN	NNP	Number=Sing	2	obl	_	SpaceAfter=No|TokenRange=38:49
+5	.	.	PUNCT	.	_	2	punct	_	SpaceAfter=No|TokenRange=49:50
