@@ -7,6 +7,7 @@ import org.lappsgrid.api.WebService;
 import org.lappsgrid.metadata.ServiceMetadata;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
+import org.lappsgrid.serialization.LifException;
 import org.lappsgrid.serialization.Serializer;
 import org.lappsgrid.serialization.lif.Annotation;
 import org.lappsgrid.serialization.lif.Container;
@@ -14,9 +15,14 @@ import org.lappsgrid.serialization.lif.View;
 import org.lappsgrid.services.lindat.Version;
 import org.lappsgrid.vocabulary.Features;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.lappsgrid.discriminator.Discriminators.*;
@@ -131,6 +137,41 @@ public class ServiceTest
 		for (Annotation a : view.getAnnotations()) {
 			assertNotNull(a.getFeature(Features.Token.PART_OF_SPEECH));
 		}
+	}
+
+	@Test
+	public void multiword() throws IOException, LifException
+	{
+		URL url = this.getClass().getResource("/multiword.connl");
+		assertNotNull(url);
+		String connl = new BufferedReader(new InputStreamReader(url.openStream())).lines().collect(Collectors.joining("\n"));
+
+//		Parser parser = new Parser();
+//		Document doc = parser.parse(url);
+//		assert 1 == doc.getSentences().size();
+
+
+		UDPipeService udpipe = new UDPipeService();
+		Container container = udpipe.convert(connl, false);
+
+		System.out.println(Serializer.toPrettyJson(container));
+	}
+
+	@Test
+	public void czech() throws IOException
+	{
+		URL url = this.getClass().getResource("/input.cz.txt");
+		assertNotNull(url);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+		String text = reader.lines().collect(Collectors.joining("\n"));
+
+		Data data = new Data(Uri.TEXT, text);
+		data.setParameter(UDPipeService.Parameters.TOOLS, UDPipeService.Parameters.Tools.PARSER);
+		String json = service.execute(data.asJson());
+
+		Data response = Serializer.parse(json);
+		assertEquals(Uri.LIF, response.getDiscriminator());
+//		System.out.println(response.asPrettyJson());
 	}
 
 	private void validate(String json) {

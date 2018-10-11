@@ -122,7 +122,7 @@ public class UDPipeService implements WebService
 
 		Map<String,Object> map = Serializer.parse(response, HashMap.class);
 		String connl = map.get("result").toString();
-
+//		System.out.println(connl);
 		Container container = null;
 		try
 		{

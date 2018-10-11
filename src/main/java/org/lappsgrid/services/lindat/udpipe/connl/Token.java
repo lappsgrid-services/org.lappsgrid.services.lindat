@@ -32,8 +32,10 @@ public class Token
 	}
 
 	public Token(String line) {
+		System.out.println("Processing " + line);
 		String[] parts = line.split("\t");
 		id = Integer.parseInt(parts[0]);
+//		id = parts[0];
 		word = parts[1];
 		lemma = parts[2];
 		upos = parts[3];
