@@ -2,6 +2,7 @@ package org.lappsgrid.services.lindat.udpipe;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lappsgrid.api.WebService;
 import org.lappsgrid.metadata.ServiceMetadata;
@@ -139,7 +140,7 @@ public class ServiceTest
 		}
 	}
 
-	@Test
+	@Ignore
 	public void multiword() throws IOException, LifException
 	{
 		URL url = this.getClass().getResource("/multiword.connl");
@@ -167,6 +168,7 @@ public class ServiceTest
 
 		Data data = new Data(Uri.TEXT, text);
 		data.setParameter(UDPipeService.Parameters.TOOLS, UDPipeService.Parameters.Tools.PARSER);
+		data.setParameter(UDPipeService.Parameters.MODEL, "cs");
 		String json = service.execute(data.asJson());
 
 		Data response = Serializer.parse(json);

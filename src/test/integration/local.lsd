@@ -8,17 +8,19 @@ String nametag_url = "$base/nametag"
 
 //String text = "Karen flew to New York. Nancy flew to Bloomington."
 
-String text = new File("src/test/resources/input.lif").text
+String text = new File("src/test/resources/input.cz.txt").text
 
 ServiceClient udpipe = new ServiceClient(udpipe_url)
 ServiceClient nametag = new ServiceClient(nametag_url)
 
 Data data = new Data(Uri.TEXT, text)
-data.setParameter("tools", "tokenizer")
-//String json = udpipe.execute(data.asJson())
-String json = udpipe.execute(text)
-println "Executing nametag service"
-json = nametag.execute(json)
+data.setParameter("tools", "tagger")
+data.setParameter("model", "cz")
+
+String json = udpipe.execute(data.asJson())
+//String json = udpipe.execute(text)
+//println "Executing nametag service"
+//json = nametag.execute(json)
 
 data = Serializer.parse(json)
 println data.asPrettyJson()
