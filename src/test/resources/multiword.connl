@@ -1,0 +1,11 @@
+# newdoc
+# newpar
+# sent_id=1
+#        0123456789012
+# text = I don't care.
+1	I	I	_	_	_	_	_	_	TokenRange=0:1
+2-3	don't	don't	_	_	_	_	_	_	TokenRange=2:7
+2	do	do	_	_	_	_	_	_	TokenRange=2:4
+3	not	not	 _	_	_	_	_	_	TokenRange=4:7
+4	care	care	_	_	_	_	_	_	TokenRange=8:12
+5	.	PUNCT	_	_	_	_	_	_	TokenRange=12:13
