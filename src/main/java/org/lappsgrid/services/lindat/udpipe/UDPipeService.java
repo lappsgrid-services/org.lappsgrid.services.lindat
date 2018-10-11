@@ -128,7 +128,7 @@ public class UDPipeService implements WebService
 		{
 			container = convert(connl, tagger);
 		}
-		catch (LifException e)
+		catch (LifException | IOException e)
 		{
 			StringWriter writer = new StringWriter();
 			PrintWriter printWriter = new PrintWriter(writer);
@@ -139,10 +139,24 @@ public class UDPipeService implements WebService
 		return new Data(Uri.LIF, container).asJson();
 	}
 
-	protected Container convert(String connl, boolean tagged) throws LifException
+	protected Container convert(String connl, boolean tagged) throws LifException, IOException
 	{
 		Parser parser = new Parser();
-		Document doc = parser.parse(connl);
+		Container container = parser.parse(connl);
+		List<View> views = container.findViewsThatContain(Uri.TOKEN);
+		if (views.size() == 0) {
+			throw new LifException("No token view found.");
+		}
+		if (tagged)
+		{
+			View tokenView = views.get(0);
+			tokenView.addContains(Uri.POS, this.getClass().getName(), "udpipe");
+			tokenView.addContains(Uri.LEMMA, this.getClass().getName(), "udpipe");
+		}
+		return container;
+//		Document doc = parser.parse(connl);
+
+		/*
 		Container container = new Container();
 		View sentenceView = container.newView();
 		sentenceView.addContains(Uri.SENTENCE, this.getClass().getName(), "udpipe");
@@ -165,6 +179,7 @@ public class UDPipeService implements WebService
 			}
 		}
 		return container;
+		*/
 	}
 
 	protected synchronized void initializeMetadata() {

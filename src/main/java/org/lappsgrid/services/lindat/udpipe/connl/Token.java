@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class Token
 {
-	private int id;
+	private String id;
 	private long start;
 	private long end;
 	private String word;
@@ -32,10 +32,13 @@ public class Token
 	}
 
 	public Token(String line) {
-		System.out.println("Processing " + line);
-		String[] parts = line.split("\t");
-		id = Integer.parseInt(parts[0]);
-//		id = parts[0];
+//		System.out.println("Processing " + line);
+		this(line.split("\t"));
+	}
+
+	public Token(String[] parts) {
+//		id = Integer.parseInt(parts[0]);
+		id = parts[0];
 		word = parts[1];
 		lemma = parts[2];
 		upos = parts[3];
@@ -49,7 +52,7 @@ public class Token
 		misc = processMisc(parts[9]);
 	}
 
-	public int getId() { return id; }
+	public String getId() { return id; }
 	public long getStart() { return  start; }
 	public long getEnd() { return end; }
 

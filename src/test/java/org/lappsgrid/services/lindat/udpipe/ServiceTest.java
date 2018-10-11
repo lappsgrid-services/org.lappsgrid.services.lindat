@@ -173,7 +173,7 @@ public class ServiceTest
 
 		Data response = Serializer.parse(json);
 		assertEquals(Uri.LIF, response.getDiscriminator());
-//		System.out.println(response.asPrettyJson());
+		System.out.println(response.asPrettyJson());
 	}
 
 	private void validate(String json) {

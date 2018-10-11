@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.lappsgrid.serialization.LifException;
 import org.lappsgrid.serialization.Serializer;
 import org.lappsgrid.serialization.lif.Container;
+import org.lappsgrid.serialization.lif.View;
 import org.lappsgrid.services.lindat.udpipe.connl.Document;
 import org.lappsgrid.services.lindat.udpipe.connl.Parser;
 import org.lappsgrid.services.lindat.udpipe.connl.Sentence;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
+import static org.lappsgrid.discriminator.Discriminators.*;
 
 /**
  *
@@ -23,25 +25,28 @@ import static org.junit.Assert.*;
 public class ParserTest
 {
 	@Test
-	public void testParse() throws IOException
+	public void testParse() throws IOException, LifException
 	{
 		URL url = this.getClass().getResource("/input.conll");
 		assertNotNull(url);
 
 		Parser parser = new Parser();
-		Document doc = parser.parse(url);
-		List<Sentence> sentences = doc.getSentences();
-		assertEquals(2, sentences.size());
+		Container container = parser.parse(url);
+		List<View> views = container.findViewsThatContain(Uri.SENTENCE);
+		assertEquals(1, views.size());
+		View view = views.get(0);
 
-		Sentence s = sentences.get(0);
-		assertEquals(6, s.getTokens().size());
-		assertEquals(0, s.getStart());
-		assertEquals(23, s.getEnd());
+		assertEquals(2, view.getAnnotations().size());
 
-		s = sentences.get(1);
-		assertEquals(5, s.getTokens().size());
-		assertEquals(24, s.getStart());
-		assertEquals(50, s.getEnd());
+//		Sentence s = sentences.get(0);
+//		assertEquals(6, s.getTokens().size());
+//		assertEquals(0, s.getStart());
+//		assertEquals(23, s.getEnd());
+//
+//		s = sentences.get(1);
+//		assertEquals(5, s.getTokens().size());
+//		assertEquals(24, s.getStart());
+//		assertEquals(50, s.getEnd());
 	}
 
 }

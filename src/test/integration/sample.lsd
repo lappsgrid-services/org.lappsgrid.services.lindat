@@ -1,0 +1,15 @@
+// Generate example solution to encoding multi-word tokens.
+
+Container container = new Container();
+container.text = "im"
+View view = container.newView();
+Annotation a = view.newAnnotation("tok-1", Uri.TOKEN)
+a.start = 0
+a.end = 2
+a.features.word = 'im'
+a.features.multiword = [
+    [word:'in', lemma:'in', pos:'PREP'],
+    [word:'dem', lemma:'der', pos:'DET']
+]
+
+println Serializer.toPrettyJson(container)
