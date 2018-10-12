@@ -11,28 +11,28 @@ import java.util.stream.Collectors;
  */
 public class UDPipeParams implements QueryParams
 {
-	public enum Language {
-		EN("english"), CS("czech");
-
-		private String string;
-		private Language(String string) {
-			this.string = string;
-		}
-		public String toString() { return string; }
-	};
+//	public enum Language {
+//		EN("english"), CS("czech"), DE("german"), FR("french"), ES("spanish");
+//
+//		private String string;
+//		private Language(String string) {
+//			this.string = string;
+//		}
+//		public String toString() { return string; }
+//	};
 
 	private boolean tagger;
 	private boolean parser;
-	private Language lang;
+	private String lang;
 
-	public UDPipeParams()
-	{
-		this(true, true, Language.EN);
-	}
+//	public UDPipeParams()
+//	{
+//		this(true, true, Language.EN);
+//	}
 
-	public UDPipeParams(Language lang) {
-		this(true, true, lang);
-	}
+//	public UDPipeParams(Language lang) {
+//		this(true, true, lang);
+//	}
 
 	public UDPipeParams(String lang) {
 		this(true, true, lang);
@@ -41,14 +41,14 @@ public class UDPipeParams implements QueryParams
 	public UDPipeParams(boolean tagger, boolean parser, String lang) {
 		this.tagger = tagger;
 		this.parser = parser;
-		this.lang = Language.valueOf(lang.toUpperCase());
+		this.lang = lang.toLowerCase(); //Language.valueOf(lang.toUpperCase());
 	}
 
-	public UDPipeParams(boolean tagger, boolean parser, Language lang) {
-		this.tagger = tagger;
-		this.parser = parser;
-		this.lang = lang;
-	}
+//	public UDPipeParams(boolean tagger, boolean parser, Language lang) {
+//		this.tagger = tagger;
+//		this.parser = parser;
+//		this.lang = lang;
+//	}
 
 	public String toString() {
 		StringBuilder buffer = new StringBuilder();
@@ -60,7 +60,7 @@ public class UDPipeParams implements QueryParams
 			buffer.append("&parser=");
 		}
 		buffer.append("&model=");
-		buffer.append(lang.toString());
+		buffer.append(lang);
 		buffer.append("&data=");
 		return buffer.toString();
 

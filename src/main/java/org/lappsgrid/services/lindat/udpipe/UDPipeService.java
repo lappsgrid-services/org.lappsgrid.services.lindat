@@ -68,6 +68,7 @@ public class UDPipeService implements WebService
 	public String execute(final String input) {
 		Data inputData = Serializer.parse(input, Data.class);
 		String discriminator = inputData.getDiscriminator();
+		Container original;
 		String text = null;
 		if (Uri.ERROR.equals(discriminator)) {
 			return input;
@@ -137,6 +138,10 @@ public class UDPipeService implements WebService
 		}
 		container.setText(text);
 		return new Data(Uri.LIF, container).asJson();
+	}
+
+	protected void merge(Container source, Container target) {
+		source.getViews();
 	}
 
 	protected Container convert(String connl, boolean tagged) throws LifException, IOException
